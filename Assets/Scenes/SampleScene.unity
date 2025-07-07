@@ -812,6 +812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14b52bf1433309a4c858c229212da96a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minimumSelectionAreaSize: 40
+  unitsLayer: 7
 --- !u!4 &1689307923
 Transform:
   m_ObjectHideFlags: 0
@@ -877,6 +879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 431518817}
+  canvas: {fileID: 586515974}
 --- !u!1 &1837633487
 GameObject:
   m_ObjectHideFlags: 0

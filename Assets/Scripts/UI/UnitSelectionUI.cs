@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitSelectionUI : MonoBehaviour{
 
     [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private Canvas canvas;
 
 
     private void Start(){
@@ -32,8 +33,10 @@ public class UnitSelectionUI : MonoBehaviour{
     private void UpdateIndicator(){
         Rect rect = UnitSelectionManager.instance.GetSelectionAreaRect();
 
-        rectTransform.anchoredPosition = rect.position;
-        rectTransform.sizeDelta = rect.size;
+        float canvasScale = canvas.transform.localScale.x;
+
+        rectTransform.anchoredPosition = rect.position / canvasScale;
+        rectTransform.sizeDelta = rect.size / canvasScale;
     }
 
 }
