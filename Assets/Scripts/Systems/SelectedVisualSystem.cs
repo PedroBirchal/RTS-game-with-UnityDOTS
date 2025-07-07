@@ -2,20 +2,26 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 
-partial struct SelectedVisualSystem : ISystem
-{
+
+[UpdateInGroup(typeof(LateSimulationSystemGroup))]
+[UpdateBefore(typeof(ResetEventsSystem))]
+partial struct SelectedVisualSystem : ISystem {
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
-    {
-        foreach(RefRO<Selected> selected in SystemAPI.Query<RefRO<Selected>>()){
-            RefRW<LocalTransform> indicatorLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualIndicator);
-            indicatorLocalTransform.ValueRW.Scale = selected.ValueRO.scale;
-        }
+    public void OnUpdate(ref SystemState state) {
+        foreach(RefRO<Selected> selected in SystemAPI.Query<RefRO<Selected>>().WithPresent<Selected>()) {
 
-        foreach(RefRO<Selected> selected in SystemAPI.Query<RefRO<Selected>>().WithDisabled<Selected>()){
-            RefRW<LocalTransform> indicatorLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualIndicator);
-            indicatorLocalTransform.ValueRW.Scale = 0.0f;
+            if (selected.ValueRO.onDeselected) {
+                RefRW<LocalTransform> indicatorLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualIndicator);
+                indicatorLocalTransform.ValueRW.Scale = 0.0f;
+            }
+            if(selected.ValueRO.onSelected) {
+                RefRW<LocalTransform> indicatorLocalTransform = SystemAPI.GetComponentRW<LocalTransform>(selected.ValueRO.visualIndicator);
+                indicatorLocalTransform.ValueRW.Scale = selected.ValueRO.scale;
+            }
+            
         }
     }
+
+
 }

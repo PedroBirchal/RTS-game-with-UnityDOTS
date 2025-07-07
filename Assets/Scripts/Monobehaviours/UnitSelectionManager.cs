@@ -42,8 +42,13 @@ public class UnitSelectionManager : MonoBehaviour {
             EntityQuery entityQuery = new EntityQueryBuilder(Allocator.Temp).WithAll<Selected>().Build(entityManager);
 
             NativeArray<Entity> entityArray = entityQuery.ToEntityArray(Allocator.Temp);
-            foreach( Entity entity in entityArray){
-                entityManager.SetComponentEnabled<Selected>(entity, false);
+            ///NativeArray<Selected> selectedArray = entityQuery.ToComponentDataArray<Selected>(Allocator.Temp);
+            for(int i = 0; i < entityArray.Length; i++) {
+                entityManager.SetComponentEnabled<Selected>(entityArray[i], false);
+                //Selected selected = selectedArray[i];
+                Selected selected = entityManager.GetComponentData<Selected>(entityArray[i]);
+                selected.onDeselected = true;
+                entityManager.SetComponentData<Selected>(entityArray[i], selected);
             }
 
             // Selecting Units inside the selection rect area:
@@ -51,7 +56,6 @@ public class UnitSelectionManager : MonoBehaviour {
             float selectionAreaSize = selectionAreaRect.width + selectionAreaRect.height;
             if(selectionAreaSize < minimumSelectionAreaSize){
                 // Single unit selection:
-                Debug.Log("Single unit selection");
                 entityQuery = entityManager.CreateEntityQuery(typeof(PhysicsWorldSingleton));
                 PhysicsWorldSingleton physicsWorldSingleton = entityQuery.GetSingleton<PhysicsWorldSingleton>();
                 CollisionWorld collisionWorld = physicsWorldSingleton.CollisionWorld;
@@ -61,13 +65,16 @@ public class UnitSelectionManager : MonoBehaviour {
                     End = cameraRay.GetPoint(1000f),
                     Filter = new CollisionFilter{
                         BelongsTo = ~0u,
-                        CollidesWith = 1u << unitsLayer,
+                        CollidesWith = 1u << GameAssets.UNITS_LAYER,
                         GroupIndex = 0,
                     }
                 };
                 if(collisionWorld.CastRay(raycastInput, out Unity.Physics.RaycastHit raycastHit)){
-                    if(entityManager.HasComponent<Unit>(raycastHit.Entity)){
+                    if(entityManager.HasComponent<Selected>(raycastHit.Entity)){
                         entityManager.SetComponentEnabled<Selected>(raycastHit.Entity, true);
+                        Selected selected = entityManager.GetComponentData<Selected>(raycastHit.Entity);
+                        selected.onSelected = true;
+                        entityManager.SetComponentData<Selected>(raycastHit.Entity, selected);
                     }
                 }
             }
@@ -83,6 +90,9 @@ public class UnitSelectionManager : MonoBehaviour {
                     Vector2 unitScreenPosition = Camera.main.WorldToScreenPoint(localTransform.Position);
                     if(selectionAreaRect.Contains(unitScreenPosition)){
                         entityManager.SetComponentEnabled<Selected>(entityArray[i], true);
+                        Selected selected = entityManager.GetComponentData<Selected>(entityArray[i]);
+                        selected.onSelected  = true;
+                        entityManager.SetComponentData<Selected>(entityArray[i], selected);
                     }
                 }
             }
