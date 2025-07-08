@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 
 public class ProjectileAttackAuthoring : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class ProjectileAttackAuthoring : MonoBehaviour
     public float timerMax;
     public int damage = 1;
     public float attackDistance;
+    public Transform projectileSpawnPositionTransform;
+
 
     public class Baker : Baker<ProjectileAttackAuthoring> {
 
@@ -16,6 +19,7 @@ public class ProjectileAttackAuthoring : MonoBehaviour
                 timerMax = authoring.timerMax,
                 damage = authoring.damage,
                 attackDistance = authoring.attackDistance,
+                projectileSpawnLocalPosition = authoring.projectileSpawnPositionTransform.localPosition,
             });
         }
 
@@ -28,4 +32,5 @@ public struct ProjectileAttack : IComponentData {
     public float timerMax;
     public int damage;
     public float attackDistance;
+    public float3 projectileSpawnLocalPosition;
 }

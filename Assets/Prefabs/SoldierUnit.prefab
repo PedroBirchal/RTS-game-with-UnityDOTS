@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8779592630225971186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5223175470148490790}
+  m_Layer: 7
+  m_Name: ProjectileSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5223175470148490790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779592630225971186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 614216643013648180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5284073876618216570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88,6 +119,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3366883147275115706, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
+      propertyPath: range
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -3366883147275115706, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
       propertyPath: timerMax
       value: 1
       objectReference: {fileID: 0}
@@ -149,6 +184,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4717601368085436679, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
       insertIndex: 0
       addedObject: {fileID: 3235396276274177216}
+    - targetCorrespondingSourceObject: {fileID: 4717601368085436679, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5223175470148490790}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5076707245826327952, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
       insertIndex: 1
@@ -210,3 +248,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerMax: 1
   damage: 1
+  attackDistance: 13
+  projectileSpawnPositionTransform: {fileID: 5223175470148490790}

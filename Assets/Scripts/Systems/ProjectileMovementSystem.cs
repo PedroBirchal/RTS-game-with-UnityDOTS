@@ -24,22 +24,24 @@ partial struct ProjectileMovementSystem : ISystem {
                 continue;
             }
             LocalTransform targetLocalTransform = SystemAPI.GetComponent<LocalTransform>(target.ValueRO.targetEntity);
+            ShootVictim targetShootVictim = SystemAPI.GetComponent<ShootVictim>(target.ValueRO.targetEntity);
+            float3 targetPosition = targetLocalTransform.TransformPoint(targetShootVictim.hitLocalPosition);
 
-            float distanceBeforeSq = math.distancesq(localTransform.ValueRO.Position, targetLocalTransform.Position);
+            float distanceBeforeSq = math.distancesq(localTransform.ValueRO.Position, targetPosition);
 
-            float3 moveDirection = targetLocalTransform.Position - localTransform.ValueRO.Position;
+            float3 moveDirection = targetPosition - localTransform.ValueRO.Position;
             moveDirection = math.normalize(moveDirection);
             localTransform.ValueRW.Position += moveDirection * projectile.ValueRO.speed * SystemAPI.Time.DeltaTime;
 
-            float distanceAfterSq = math.distancesq(localTransform.ValueRO.Position, targetLocalTransform.Position);
+            float distanceAfterSq = math.distancesq(localTransform.ValueRO.Position, targetPosition);
 
             if(distanceAfterSq > distanceBeforeSq){
                 // Projectile has overshot the target.
-                localTransform.ValueRW.Position = targetLocalTransform.Position;
+                localTransform.ValueRW.Position = targetPosition;
             }
 
             float destroyDistanceSq = 0.2f;
-            if(math.distancesq(localTransform.ValueRO.Position, targetLocalTransform.Position) < destroyDistanceSq) {
+            if(math.distancesq(localTransform.ValueRO.Position, targetPosition) < destroyDistanceSq) {
                 RefRW<Health> targetHealth = SystemAPI.GetComponentRW<Health>(target.ValueRO.targetEntity);
                 targetHealth.ValueRW.health -= projectile.ValueRO.damage;
 
