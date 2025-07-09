@@ -7,7 +7,7 @@ partial struct ProjectileAttackSystem : ISystem {
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state) {
-        EntitiesReferences entitiesReferences = SystemAPI.GetSingleton<EntitiesReferences>();
+        //EntitiesReferences entitiesReferences = SystemAPI.GetSingleton<EntitiesReferences>();
         foreach ((
             RefRW<ProjectileAttack> projectileAttack,
             RefRO<Target> target,
@@ -20,7 +20,7 @@ partial struct ProjectileAttackSystem : ISystem {
             RefRO<Target>,
             RefRO<LocalTransform>,
             RefRW<UnitMovement>
-        >()){
+        >().WithDisabled<MovementOverride>()){
             if(target.ValueRO.targetEntity == Entity.Null){
                 continue;
             }
@@ -43,8 +43,8 @@ partial struct ProjectileAttackSystem : ISystem {
             projectileAttack.ValueRW.timer = projectileAttack.ValueRO.timerMax;
 
             
-
-            Entity projectileEntity = state.EntityManager.Instantiate(entitiesReferences.projectilePrefabEntity);
+            RefRO<EntitiesReferences> entitiesReferences = SystemAPI.GetComponentRO<EntitiesReferences>(projectileAttack.ValueRO.entitiesReferencesEntity);
+            Entity projectileEntity = state.EntityManager.Instantiate(entitiesReferences.ValueRO.projectilePrefabEntity);
             float3 projectileSpawnWorldPosition = localTransform.ValueRO.TransformPoint(projectileAttack.ValueRO.projectileSpawnLocalPosition);
             SystemAPI.SetComponent(projectileEntity, LocalTransform.FromPosition(projectileSpawnWorldPosition));
             RefRW<Projectile> projectileProjectile = SystemAPI.GetComponentRW<Projectile>(projectileEntity);

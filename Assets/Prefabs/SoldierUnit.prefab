@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoldierUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 8290358872865439208, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
+      propertyPath: maxHealth
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -195,7 +199,10 @@ PrefabInstance:
       insertIndex: 3
       addedObject: {fileID: 1034782022995578285}
     - targetCorrespondingSourceObject: {fileID: 5076707245826327952, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
-      insertIndex: 7
+      insertIndex: 6
+      addedObject: {fileID: 312102877398889591}
+    - targetCorrespondingSourceObject: {fileID: 5076707245826327952, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
+      insertIndex: 8
       addedObject: {fileID: 7669504593005699264}
   m_SourcePrefab: {fileID: 100100000, guid: d385ea498bcdb414b9fdbc2bcfa1fbd3, type: 3}
 --- !u!4 &614216643013648180 stripped
@@ -232,6 +239,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca900365afe8ef842ab69b944c0d035c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &312102877398889591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119845913904694179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b09e714a203b88044b0ca825c21d8261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7669504593005699264

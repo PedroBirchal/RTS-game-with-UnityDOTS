@@ -37,6 +37,9 @@ partial struct TargetingSystem : ISystem {
             };
             if(collisionWorld.OverlapSphere(localTransform.ValueRO.Position, targeting.ValueRO.range, ref distanceHitList, collisionFilter)){
                 foreach( DistanceHit distanceHit in distanceHitList){
+                    if(!SystemAPI.Exists(distanceHit.Entity) || !SystemAPI.HasComponent<Unit>(distanceHit.Entity)){
+                        continue;
+                    }
                     Unit targetUnit = SystemAPI.GetComponent<Unit>(distanceHit.Entity);
                     if(targetUnit.faction == targeting.ValueRO.targetFaction){
                         target.ValueRW.targetEntity = distanceHit.Entity;

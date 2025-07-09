@@ -9,6 +9,7 @@ public class ProjectileAttackAuthoring : MonoBehaviour
     public int damage = 1;
     public float attackDistance;
     public Transform projectileSpawnPositionTransform;
+    public GameObject EntitiesReferencesGameObject;
 
 
     public class Baker : Baker<ProjectileAttackAuthoring> {
@@ -20,6 +21,7 @@ public class ProjectileAttackAuthoring : MonoBehaviour
                 damage = authoring.damage,
                 attackDistance = authoring.attackDistance,
                 projectileSpawnLocalPosition = authoring.projectileSpawnPositionTransform.localPosition,
+                entitiesReferencesEntity = GetEntity(authoring.EntitiesReferencesGameObject,TransformUsageFlags.Dynamic),
             });
         }
 
@@ -33,4 +35,5 @@ public struct ProjectileAttack : IComponentData {
     public int damage;
     public float attackDistance;
     public float3 projectileSpawnLocalPosition;
+    public Entity entitiesReferencesEntity;
 }

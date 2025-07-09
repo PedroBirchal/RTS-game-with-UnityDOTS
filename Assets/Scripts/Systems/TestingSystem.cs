@@ -1,35 +1,17 @@
 using Unity.Burst;
 using Unity.Entities;
-using Unity.Physics;
-using Unity.Transforms;
 using UnityEngine;
 
 partial struct TestingSystem : ISystem
 {
 
     [BurstCompile]
-    public void OnUpdate(ref SystemState state)
-    {
-        /*
-        int numberOfEntities = 0;
+    public void OnUpdate(ref SystemState state) {
+        int numberOfAllies = 0;
 
-        foreach((
-            RefRW<LocalTransform> localTransform ,
-            RefRO<UnitMovement> unitMovement, 
-            RefRW<PhysicsVelocity> physicsVelocity,
-            RefRO<Selected> selected) 
-            in 
-            SystemAPI.Query<
-            RefRW<LocalTransform>,
-            RefRO<UnitMovement>,
-            RefRW<PhysicsVelocity>,
-            RefRO<Selected>
-            >()){
-            
-            numberOfEntities++;
+        foreach( var ally in SystemAPI.Query<RefRO<Unit>>().WithPresent<Selected>()){
+            numberOfAllies ++;
         }
-        Debug.Log(numberOfEntities);
-        */
     }
 
 }

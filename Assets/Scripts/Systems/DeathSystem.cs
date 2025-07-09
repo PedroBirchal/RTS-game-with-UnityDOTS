@@ -20,3 +20,4 @@ partial struct DeathSystem : ISystem {
         }
     }
 }
+

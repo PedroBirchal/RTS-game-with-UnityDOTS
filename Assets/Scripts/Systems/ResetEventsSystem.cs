@@ -1,7 +1,7 @@
 using Unity.Burst;
 using Unity.Entities;
 
-[UpdateInGroup(typeof(LateSimulationSystemGroup))]
+[UpdateInGroup(typeof(LateSimulationSystemGroup), OrderLast =true)]
 partial struct ResetEventsSystem : ISystem {
 
     [BurstCompile]
